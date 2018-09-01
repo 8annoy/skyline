@@ -1,6 +1,7 @@
 import React from 'react';
 import Skyline from './Skyline';
 import calculateVolumes from '../algorithm';
+import isValid from '../validations';
 import '../styles/App.css';
 
 class App extends React.Component {
@@ -9,7 +10,8 @@ class App extends React.Component {
   
   state = {
     data: App.INITIAL_HEIGHTS,
-    toFill: calculateVolumes(App.INITIAL_HEIGHTS)
+    toFill: calculateVolumes(App.INITIAL_HEIGHTS),
+    isValid: true
   };
 
   constructor() {
@@ -18,8 +20,14 @@ class App extends React.Component {
   }
 
   generateCity = (event) => {
+    event.preventDefault();
     let inputValues = this.padWithBlanks(this.refs.inputValues ? this.refs.inputValues.value.split(',').map(x => parseInt(x, 10)) : []);
-    this.setState({ data: inputValues, toFill: calculateVolumes(inputValues) });
+    if (isValid(inputValues)) {
+      this.setState({ data: inputValues, toFill: calculateVolumes(inputValues), isValid: true });  
+    }
+    else {
+      this.setState(...this.state, {isValid: false});
+    }
   }
   
   volumeFilled = () => {
@@ -41,12 +49,14 @@ class App extends React.Component {
         <header className="App-header">
           <h1 className="App-title">Flooded City</h1>
           <p className="App-intro">
-            Enter a comma-separated list of integers to generate a new city
+            Enter a comma-separated list of positive integers to generate a new city
           </p>
-          <div className="inputs">
-            <input type="text" ref="inputValues"/>
-            <input type="button" className="btn btn-primary" value="Generate" onClick={this.generateCity} />
-          </div>
+          <form onSubmit={this.generateCity} className="inputs">
+            <div className='form-group'>
+              <input className={`${this.state.isValid ? '' : 'invalid-input'}`} type="text" ref="inputValues" />
+              <input type="submit" className="btn btn-primary" value="Generate" onClick={this.generateCity} />
+            </div>
+          </form>
         </header>
         <Skyline
           data={this.padWithBlanks(data)}

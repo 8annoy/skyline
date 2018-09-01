@@ -21,6 +21,10 @@ input {
   font-size: large;
 }
 
+.invalid-input {
+  border: 4px solid red;
+}
+
 svg {
   position: relative;
   display: block;
