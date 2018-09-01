@@ -1,0 +1,35 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #2e8b57;
+  height: 170px;
+  padding: 30px;
+  color: whitesmoke;
+}
+
+input {
+  margin-left: 10px;
+  color: grey;
+}
+.App-title {
+  font-size: 2em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+svg {
+  position: relative;
+  display: block;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 2px solid black;
+  width: 650px;
+  height: 270px;
+  background-image: url('../assets/rainysky.gif');
+}
+
+
